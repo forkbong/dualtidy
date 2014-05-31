@@ -60,7 +60,7 @@ class Battery:
                 return 'battery-full-symbolic'
 
         elif state == 'Charging':
-            if percentage >= 90:
+            if percentage >= 80:
                 return 'battery-full-charging-symbolic'
             elif percentage >= 60:
                 return 'battery-good-charging-symbolic'

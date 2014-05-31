@@ -9,7 +9,7 @@ license=('GPL')
 depends=(python2 gtk2 acpi)
 makedepends=()
 source=(https://raw.github.com/nashamri/dualtidy/master/"$pkgname".py)
-md5sums=('4adf7e47acac9144f936991dc8a073cb')
+md5sums=('c7be5ab6d3aa1f9c8d48122b3b6d5fd7')
 
 package () {
    cd "$srcdir"

@@ -17,6 +17,7 @@
 
 """Lightweight GTK tray battery monitor that supports more than one battery."""
 
+from ctypes import cdll, byref, create_string_buffer
 import gtk
 import gobject
 import subprocess
@@ -95,6 +96,9 @@ class Battery:
 
 def main():
     """Initialize one instance of Battery class per battery."""
+    name = create_string_buffer(b'dualtidy')
+    libc = cdll.LoadLibrary('libc.so.6')
+    libc.prctl(15, byref(name), 0, 0, 0)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     num_batteries = len(subprocess.check_output(ACPI_CMD).split('\n')) - 1

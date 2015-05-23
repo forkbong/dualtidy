@@ -25,7 +25,9 @@ import re
 import signal
 
 ACPI_CMD = 'acpi'
-TIMEOUT = 5000
+ICON_TIMEOUT = 5000
+NOTIFY_TIMEOUT = 120000
+
 
 class Battery:
 
@@ -35,7 +37,8 @@ class Battery:
         self.num = num
         self.icon = gtk.StatusIcon()
         self.update_icon()
-        gobject.timeout_add(TIMEOUT, self.update_icon)
+        gobject.timeout_add(ICON_TIMEOUT, self.update_icon)
+        gobject.timeout_add(NOTIFY_TIMEOUT, self.notify)
 
     def get_battery_info(self):
         """Get battery state and percentage using acpi."""
@@ -108,6 +111,23 @@ class Battery:
         self.icon.set_from_icon_name(icon_name)
         self.icon.set_tooltip_text(info['tooltip'])
         return True
+
+    def notify(self):
+        """Send a notification on empty or full battery."""
+        info = self.get_battery_info()
+        state = info['state']
+        percentage = info['percentage']
+        tooltip = info['tooltip']
+        if state in ['Charging', 'Unknown'] and percentage >= 80:
+            cmd = ['notify-send', '-i', 'battery-full-charged-symbolic',
+                   'Battery Full', 'Unplug']
+            subprocess.call(cmd)
+        elif state == 'Discharging' and percentage <= 20:
+            cmd = ['notify-send', '-i', 'battery-caution-symbolic',
+                   'Low Battery', tooltip]
+            subprocess.call(cmd)
+        return True
+
 
 def main():
     """Initialize one instance of Battery class per battery."""

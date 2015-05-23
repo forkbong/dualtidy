@@ -1,18 +1,17 @@
-# Contributor: Nasser Alshammari <designernasser@gmail.com>
+# Maintainer: forkbong <panktist@gmail.com>
 pkgname=dualtidy
-pkgver=20140531
+pkgver=20150523
 pkgrel=1
-pkgdesc="Lightweight GTK tray battery monitor that support more than one battery. Python fork of tidybattery"
+pkgdesc="Lightweight GTK tray battery monitor that supports more than one battery."
 arch=('any')
-url="https://bbs.archlinux.org/viewtopic.php?pid=997284"
-license=('GPL')
+url="https://github.com/forkbong/dualtidy"
+license=('GPL3')
 depends=(python2 gtk2 acpi)
 makedepends=()
-source=(https://raw.github.com/nashamri/dualtidy/master/"$pkgname".py)
-md5sums=('c7be5ab6d3aa1f9c8d48122b3b6d5fd7')
+source=("https://raw.github.com/forkbong/dualtidy/master/${pkgname}.py")
+sha256sums=('5fa30891bd6123e75560a368e45098635974e2f878ee0a57dd8298a9377c7b1a')
 
 package () {
    cd "$srcdir"
-    install -D -m 0755 dualtidy.py "$pkgdir"/usr/bin/dualtidy
-    }
-
+   install -Dm755 "${pkgname}.py" "${pkgdir}/usr/bin/dualtidy"
+}

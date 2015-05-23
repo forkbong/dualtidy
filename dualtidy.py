@@ -64,29 +64,30 @@ class Battery:
         }
 
     def get_icon_name(self, state, percentage):
-        if state == 'Discharging' or state == 'Unknown':
+        """Get icon name according to battery state and percentage."""
+        if state == 'Discharging':
             if percentage < 10:
                 return 'battery-empty-symbolic'
             elif percentage < 20:
                 return 'battery-caution-symbolic'
             elif percentage < 40:
                 return 'battery-low-symbolic'
-            elif percentage < 60:
+            elif percentage < 80:
                 return 'battery-good-symbolic'
             else:
                 return 'battery-full-symbolic'
 
         elif state == 'Charging':
-            if percentage >= 80:
-                return 'battery-full-charging-symbolic'
-            elif percentage >= 60:
-                return 'battery-good-charging-symbolic'
-            elif percentage >= 40:
-                return 'battery-low-charging-symbolic'
-            elif percentage >= 20:
-                return 'battery-caution-charging-symbolic'
-            else:
+            if percentage < 10:
                 return 'battery-empty-charging-symbolic'
+            elif percentage < 20:
+                return 'battery-caution-charging-symbolic'
+            elif percentage < 40:
+                return 'battery-low-charging-symbolic'
+            elif percentage < 80:
+                return 'battery-good-charging-symbolic'
+            else:
+                return 'battery-full-charging-symbolic'
 
         elif state == 'Charged':
             return 'battery-full-charged-symbolic'

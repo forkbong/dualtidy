@@ -93,7 +93,7 @@ class Battery:
             else:
                 icon = 'battery-full-charging-symbolic'
 
-        elif state == 'Charged':
+        elif state == 'Charged' or (state == 'Unknown' and percentage == 100):
             icon = 'battery-full-charged-symbolic'
 
         elif state == 'Full':

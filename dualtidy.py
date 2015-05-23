@@ -39,14 +39,17 @@ class Battery:
 
     def get_battery_info(self):
         """Get battery state and percentage using acpi."""
+        missing = {
+            'state': "Missing",
+            'percentage': 0,
+            'tooltip': "Battery not found",
+        }
         try:
             text = subprocess.check_output(ACPI_CMD).split('\n')[self.num]
         except IndexError:
-            return {
-                'state': "Unknown",
-                'percentage': 0,
-                'tooltip': "Battery not found",
-            }
+            return missing
+        if not text:
+            return missing
         if not re.match("[^:]+:[^,]+,.+", text):
             return {
                 'state': "Unknown",

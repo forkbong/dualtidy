@@ -42,14 +42,22 @@ class Battery:
         try:
             text = subprocess.check_output(ACPI_CMD).split('\n')[self.num]
         except IndexError:
-            return {'state':"Unknown", 'percentage':0, 'tooltip':"Battery not found"}
+            return {
+                'state': "Unknown",
+                'percentage': 0,
+                'tooltip': "Battery not found",
+            }
         if not re.match("[^:]+:[^,]+,.+", text):
-            return {'state':"Unknown", 'percentage':0, 'tooltip':"Not Parsable: %s" % text}
+            return {
+                'state': "Unknown",
+                'percentage': 0,
+                'tooltip': "Not Parsable: %s" % text,
+            }
         data = text.split(',')
         return {
             'state': data[0].split(':')[1].strip(' '),
             'percentage': int(data[1].strip(' %')),
-            'tooltip': text.split(':',1)[1][1:]
+            'tooltip': text.split(':', 1)[1][1:],
         }
 
     def get_icon_name(self, state, percentage):

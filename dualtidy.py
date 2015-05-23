@@ -63,40 +63,43 @@ class Battery:
             'tooltip': text.split(':', 1)[1][1:],
         }
 
-    def get_icon_name(self, state, percentage):
+    @staticmethod
+    def get_icon_name(state, percentage):
         """Get icon name according to battery state and percentage."""
         if state == 'Discharging':
             if percentage < 10:
-                return 'battery-empty-symbolic'
+                icon = 'battery-empty-symbolic'
             elif percentage < 20:
-                return 'battery-caution-symbolic'
+                icon = 'battery-caution-symbolic'
             elif percentage < 40:
-                return 'battery-low-symbolic'
+                icon = 'battery-low-symbolic'
             elif percentage < 80:
-                return 'battery-good-symbolic'
+                icon = 'battery-good-symbolic'
             else:
-                return 'battery-full-symbolic'
+                icon = 'battery-full-symbolic'
 
         elif state == 'Charging':
             if percentage < 10:
-                return 'battery-empty-charging-symbolic'
+                icon = 'battery-empty-charging-symbolic'
             elif percentage < 20:
-                return 'battery-caution-charging-symbolic'
+                icon = 'battery-caution-charging-symbolic'
             elif percentage < 40:
-                return 'battery-low-charging-symbolic'
+                icon = 'battery-low-charging-symbolic'
             elif percentage < 80:
-                return 'battery-good-charging-symbolic'
+                icon = 'battery-good-charging-symbolic'
             else:
-                return 'battery-full-charging-symbolic'
+                icon = 'battery-full-charging-symbolic'
 
         elif state == 'Charged':
-            return 'battery-full-charged-symbolic'
+            icon = 'battery-full-charged-symbolic'
 
         elif state == 'Full':
-            return 'battery-full-symbolic'
+            icon = 'battery-full-symbolic'
 
         else:
-            return 'battery-missing-symbolic'
+            icon = 'battery-missing-symbolic'
+
+        return icon
 
     def update_icon(self):
         """Update tray icon if needed."""

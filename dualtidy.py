@@ -137,7 +137,8 @@ def main():
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     num_batteries = len(subprocess.check_output(ACPI_CMD).split('\n')) - 1
-    for i in xrange(num_batteries):
+    Battery(0)
+    for i in xrange(1, num_batteries):
         Battery(num=i)
 
     gtk.main()

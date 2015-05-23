@@ -21,6 +21,7 @@ import gtk
 import gobject
 import subprocess
 import re
+import signal
 
 ACPI_CMD = 'acpi'
 TIMEOUT = 5000
@@ -92,11 +93,16 @@ class Battery:
         self.icon.set_tooltip_text(info['tooltip'])
         return True
 
-if __name__ == "__main__":
-    try:
-        num_batteries = len(subprocess.check_output(ACPI_CMD).split('\n')) - 1
-        for i in xrange(num_batteries):
-            Battery(num = i)
-        gtk.main()
-    except KeyboardInterrupt:
-        pass
+def main():
+    """Initialize one instance of Battery class per battery."""
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+    num_batteries = len(subprocess.check_output(ACPI_CMD).split('\n')) - 1
+    for i in xrange(num_batteries):
+        Battery(num=i)
+
+    gtk.main()
+
+
+if __name__ == '__main__':
+    main()

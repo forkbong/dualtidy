@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""Lightweight GTK tray battery monitor that supports more than one battery."""
+
 import gtk
 import gobject
 import subprocess
@@ -24,6 +26,9 @@ ACPI_CMD = 'acpi'
 TIMEOUT = 5000
 
 class Battery:
+
+    """Main battery class."""
+
     def __init__(self, num=0):
         self.num = num
         self.icon = gtk.StatusIcon()
@@ -31,6 +36,7 @@ class Battery:
         gobject.timeout_add(TIMEOUT, self.update_icon)
 
     def get_battery_info(self):
+        """Get battery state and percentage using acpi."""
         try:
             text = subprocess.check_output(ACPI_CMD).split('\n')[self.num]
         except IndexError:
@@ -79,6 +85,7 @@ class Battery:
             return 'battery-missing-symbolic'
 
     def update_icon(self):
+        """Update tray icon if needed."""
         info = self.get_battery_info()
         icon_name = self.get_icon_name(info['state'], info['percentage'])
         self.icon.set_from_icon_name(icon_name)

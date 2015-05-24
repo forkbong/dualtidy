@@ -71,36 +71,40 @@ class Battery:
         """Get icon name according to battery state and percentage."""
         if state == 'Discharging':
             if percentage < 10:
-                icon = 'battery-empty-symbolic'
+                icon = 'battery-000'
             elif percentage < 20:
-                icon = 'battery-caution-symbolic'
+                icon = 'battery-020'
             elif percentage < 40:
-                icon = 'battery-low-symbolic'
+                icon = 'battery-040'
+            elif percentage < 60:
+                icon = 'battery-060'
             elif percentage < 80:
-                icon = 'battery-good-symbolic'
+                icon = 'battery-080'
             else:
-                icon = 'battery-full-symbolic'
+                icon = 'battery-100'
 
         elif state == 'Charging':
             if percentage < 10:
-                icon = 'battery-empty-charging-symbolic'
+                icon = 'battery-000-charging'
             elif percentage < 20:
-                icon = 'battery-caution-charging-symbolic'
+                icon = 'battery-020-charging'
             elif percentage < 40:
-                icon = 'battery-low-charging-symbolic'
+                icon = 'battery-040-charging'
+            elif percentage < 60:
+                icon = 'battery-060-charging'
             elif percentage < 80:
-                icon = 'battery-good-charging-symbolic'
+                icon = 'battery-080-charging'
             else:
-                icon = 'battery-full-charging-symbolic'
+                icon = 'battery-100-charging'
 
         elif state == 'Charged' or (state == 'Unknown' and percentage == 100):
-            icon = 'battery-full-charged-symbolic'
+            icon = 'battery-charged'
 
         elif state == 'Full':
-            icon = 'battery-full-symbolic'
+            icon = 'battery-100'
 
         else:
-            icon = 'battery-missing-symbolic'
+            icon = 'battery-missing'
 
         return icon
 

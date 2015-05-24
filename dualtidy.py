@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,7 @@
 """Lightweight GTK tray battery monitor that supports more than one battery."""
 
 from ctypes import cdll, byref, create_string_buffer
-import gtk
-import gobject
+from gi.repository import Gtk, GObject
 import subprocess
 import re
 import signal
@@ -35,10 +34,10 @@ class Battery:
 
     def __init__(self, num=0):
         self.num = num
-        self.icon = gtk.StatusIcon()
+        self.icon = Gtk.StatusIcon()
         self.update_icon()
-        gobject.timeout_add(ICON_TIMEOUT, self.update_icon)
-        gobject.timeout_add(NOTIFY_TIMEOUT, self.notify)
+        GObject.timeout_add(ICON_TIMEOUT, self.update_icon)
+        GObject.timeout_add(NOTIFY_TIMEOUT, self.notify)
 
     def get_battery_info(self):
         """Get battery state and percentage using acpi."""
@@ -47,8 +46,9 @@ class Battery:
             'percentage': 0,
             'tooltip': "Battery not found",
         }
+        text = subprocess.check_output(ACPI_CMD).decode().split('\n')
         try:
-            text = subprocess.check_output(ACPI_CMD).split('\n')[self.num]
+            text = text[self.num]
         except IndexError:
             return missing
         if not text:
@@ -140,12 +140,12 @@ def main():
     libc.prctl(15, byref(name), 0, 0, 0)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-    num_batteries = len(subprocess.check_output(ACPI_CMD).split('\n')) - 1
+    num_batteries = len(subprocess.check_output(ACPI_CMD).decode().split('\n')) - 1
     Battery(0)
-    for i in xrange(1, num_batteries):
+    for i in range(1, num_batteries):
         Battery(num=i)
 
-    gtk.main()
+    Gtk.main()
 
 
 if __name__ == '__main__':

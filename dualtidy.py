@@ -140,7 +140,8 @@ def main():
     libc.prctl(15, byref(name), 0, 0, 0)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-    num_batteries = len(subprocess.check_output(ACPI_CMD).decode().split('\n')) - 1
+    output = subprocess.check_output(ACPI_CMD).decode()
+    num_batteries = len(output.split('\n')) - 1
     Battery(0)
     for i in range(1, num_batteries):
         Battery(num=i)

@@ -1,6 +1,6 @@
 # Maintainer: forkbong <panktist@gmail.com>
 pkgname=dualtidy
-pkgver=20150523
+pkgver=20150605
 pkgrel=1
 pkgdesc="Lightweight GTK tray battery monitor that supports more than one battery."
 arch=('any')
@@ -9,7 +9,7 @@ license=('GPL3')
 depends=(python3 gtk3 acpi)
 makedepends=()
 source=("https://raw.github.com/forkbong/dualtidy/master/${pkgname}.py")
-sha256sums=('a1a9ca43488f06dce0921f85d5dc5daea243927648a9109b90eb6b958117a6bf')
+sha256sums=('ececd7e6c37ad1de1a018644de98facb62e63bab979ddb8aac67149d0538bcd3')
 
 package () {
    cd "$srcdir"

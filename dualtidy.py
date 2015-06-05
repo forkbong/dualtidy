@@ -69,40 +69,15 @@ class Battery:
     @staticmethod
     def get_icon_name(state, percentage):
         """Get icon name according to battery state and percentage."""
+        rounded_percentage = ('00' + str(round(percentage, -1)))[-3:]
         if state == 'Discharging':
-            if percentage < 10:
-                icon = 'battery-000'
-            elif percentage < 20:
-                icon = 'battery-020'
-            elif percentage < 40:
-                icon = 'battery-040'
-            elif percentage < 60:
-                icon = 'battery-060'
-            elif percentage < 80:
-                icon = 'battery-080'
-            else:
-                icon = 'battery-100'
-
+            icon = 'battery-' + rounded_percentage
         elif state == 'Charging':
-            if percentage < 10:
-                icon = 'battery-000-charging'
-            elif percentage < 20:
-                icon = 'battery-020-charging'
-            elif percentage < 40:
-                icon = 'battery-040-charging'
-            elif percentage < 60:
-                icon = 'battery-060-charging'
-            elif percentage < 80:
-                icon = 'battery-080-charging'
-            else:
-                icon = 'battery-100-charging'
-
+            icon = 'battery-' + rounded_percentage + '-charging'
         elif state == 'Charged' or (state == 'Unknown' and percentage == 100):
             icon = 'battery-charged'
-
         elif state == 'Full':
             icon = 'battery-100'
-
         else:
             icon = 'battery-missing'
 
@@ -123,11 +98,11 @@ class Battery:
         percentage = info['percentage']
         tooltip = info['tooltip']
         if state in ['Charging', 'Unknown'] and percentage >= 80:
-            cmd = ['notify-send', '-i', 'battery-full-charged-symbolic',
+            cmd = ['notify-send', '-i', 'battery-charged',
                    'Battery Full', 'Unplug']
             subprocess.call(cmd)
         elif state == 'Discharging' and percentage <= 20:
-            cmd = ['notify-send', '-i', 'battery-caution-symbolic',
+            cmd = ['notify-send', '-i', 'battery-010',
                    'Low Battery', tooltip]
             subprocess.call(cmd)
         return True

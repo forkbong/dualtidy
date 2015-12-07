@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +12,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 """Lightweight GTK tray battery monitor that supports more than one battery."""
 
-from ctypes import cdll, byref, create_string_buffer
-from gi.repository import Gtk, GObject
-import subprocess
 import re
 import signal
+import subprocess
+from ctypes import byref, cdll, create_string_buffer
+
+from gi.repository import GObject, Gtk
 
 ACPI_CMD = 'acpi'
 ICON_TIMEOUT = 5000

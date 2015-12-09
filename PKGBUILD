@@ -9,7 +9,7 @@ license=('GPL3')
 depends=(python3 gtk3 acpi)
 makedepends=()
 source=("https://raw.github.com/forkbong/dualtidy/master/${pkgname}.py")
-sha256sums=('ececd7e6c37ad1de1a018644de98facb62e63bab979ddb8aac67149d0538bcd3')
+sha256sums=('deb435c211eba9fec10c4f2ceae7e94f1e30c07a73071700d0c5112d3d5384fe')
 
 package () {
    cd "$srcdir"

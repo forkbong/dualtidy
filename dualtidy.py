@@ -20,7 +20,7 @@ import signal
 import subprocess
 from ctypes import byref, cdll, create_string_buffer
 
-from gi.repository import GObject, Gtk
+from gi.repository import GObject, Gtk, Notify
 
 ACPI_CMD = 'acpi'
 ICON_TIMEOUT = 5000
@@ -35,8 +35,10 @@ class Battery:
         self.num = num
         self.icon = Gtk.StatusIcon()
         self.update_icon()
+        self.notif = Notify.Notification()
         GObject.timeout_add(ICON_TIMEOUT, self.update_icon)
         GObject.timeout_add(NOTIFY_TIMEOUT, self.notify)
+        Notify.init('dualtidy')
 
     def get_battery_info(self):
         """Get battery state and percentage using acpi."""
@@ -97,13 +99,11 @@ class Battery:
         percentage = info['percentage']
         tooltip = info['tooltip']
         if state in ['Charging', 'Unknown'] and percentage >= 80:
-            cmd = ['notify-send', '-i', 'battery-charged',
-                   'Battery Full', 'Unplug']
-            subprocess.call(cmd)
+            self.notif.update('Battery Full', 'Unplug', 'battery-charged')
+            self.notif.show()
         elif state == 'Discharging' and percentage <= 20:
-            cmd = ['notify-send', '-i', 'battery-010',
-                   'Low Battery', tooltip]
-            subprocess.call(cmd)
+            self.notif.update('Low Battery', tooltip, 'battery-010')
+            self.notif.show()
         return True
 
 
